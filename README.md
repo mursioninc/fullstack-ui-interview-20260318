@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokedex App
 
 ## Getting Started
 
@@ -16,21 +16,20 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## About
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This is a simple Pokedex app built with Next.js. It fetches a list of Pokémon and allows you to search by name.
 
-## Learn More
+## Overview
 
-To learn more about Next.js, take a look at the following resources:
+This app is functional but has room for improvement. It will serve as a reference for discussion during the interview — please review it, but you do not need to write or modify any code. Some areas worth thinking about:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- How data fetching is structured and where it happens
+- How the search input behaves and its impact
+- Error and loading states
+- Component structure and separation of concerns
+- TypeScript usage
+- Performance — both perceived and actual
+- Accessibility features
+- How a new Pokémon detail page would be structured
+- Next.js features that could be better leveraged
