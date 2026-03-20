@@ -1,66 +1,60 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+
+import { useState, useEffect } from 'react'
 
 export default function Home() {
+  const [pokemons, setPokemons] = useState([])
+  const [search, setSearch] = useState('')
+  const [searchResult, setSearchResult] = useState(null)
+
+  useEffect(() => {
+    fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20')
+      .then(res => res.json())
+      .then(data => setPokemons(data.results))
+  }, [])
+
+  useEffect(() => {
+    if (search) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${search}`)
+        .then(res => res.json())
+        .then(data => setSearchResult(data))
+    }
+  }, [search])
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="container">
+      <h1 className="title">Pokedex</h1>
+
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Search a pokemon by name..."
+          className="search-input"
+          onChange={(e) => setSearch(e.target.value)}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+      </div>
+
+      {searchResult && (
+        <div className="search-result">
+          <img src={(searchResult as any).sprites.front_default} alt={(searchResult as any).name} />
+          <h2>{(searchResult as any).name}</h2>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      )}
+
+      <ul className="pokemon-list">
+        {pokemons.map((pokemon: any) => {
+          const id = pokemon.url.split('/').filter(Boolean).pop()
+          return (
+            <li key={pokemon.name} className="pokemon-card">
+              <img
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                alt={pokemon.name}
+              />
+              <span>{pokemon.name}</span>
+            </li>
+          )
+        })}
+      </ul>
     </div>
-  );
+  )
 }
